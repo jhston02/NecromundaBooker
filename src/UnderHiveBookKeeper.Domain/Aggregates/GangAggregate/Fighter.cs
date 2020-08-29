@@ -5,8 +5,30 @@ using UnderHiveBookKeeper.Gangs.Domain.SeedWork;
 
 namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
 {
-    class Fighter : Entity
+    public abstract class Fighter : Entity
     {
+        public Fighter(string name, ushort move, ushort weaponSkill, ushort balisticSkill, 
+            ushort strength, ushort toughness, ushort wounds, ushort initiative,
+            ushort attacks, ushort leadership, ushort willPower, ushort intelligence, ushort coolness,
+            bool isSpecialist, List<Trait> traits)
+        {
+            this.Name = name;
+            this.Move = move;
+            this.Weapon_Skill = weaponSkill;
+            this.Balistic_Skill = balisticSkill;
+            this.Strength = strength;
+            this.Toughness = toughness;
+            this.Initiative = initiative;
+            this.IsSpecialist = isSpecialist;
+            this.Attacks = attacks;
+            this.Wounds = wounds;
+            this.Leadership = leadership;
+            this.Willpower = willPower;
+            this.Intelligence = intelligence;
+            this._trait = traits;
+            this.Coolness = coolness;
+        }
+
         public string Name { get; private set; }
 
         public ushort Move { get; private set; }

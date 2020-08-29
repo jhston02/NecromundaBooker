@@ -7,7 +7,7 @@ using UnderHiveBookKeeper.Gangs.Domain.SeedWork;
 
 namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
 {
-    class Gang : Entity, IAggregateRoot
+    public class Gang : Entity, IAggregateRoot
     {
         public GangType GangType { get; private set; }
 
@@ -83,6 +83,9 @@ namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
                 _hangerOns.Add(ho);
             else
                 throw new ArgumentException("Cannot add Hanger On at maximimum allowed with Rep");
+
+            if (ho.GangSpecific != GangSpecific.None && ho.GangSpecific.ToString() != GangType.ToString())
+                throw new ArgumentException("Cannot give gang specific hanger on to different gang");
         }
 
         public void AddReputation(ushort reputation)

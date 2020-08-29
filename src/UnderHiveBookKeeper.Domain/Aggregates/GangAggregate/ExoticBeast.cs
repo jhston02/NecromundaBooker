@@ -4,7 +4,7 @@ using System.Text;
 
 namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
 {
-    class ExoticBeast : Wargear
+    public class ExoticBeast : Wargear
     {
         public ushort Move { get; private set; }
 

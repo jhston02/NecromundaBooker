@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UnderHiveBookKeeper.Gangs.Domain.SeedWork
 {
-    interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork : IDisposable
     {
         Task<int> SaveChangesAsync(CancellationToken token = default(CancellationToken));
         Task<bool> SaveEntitiesAsync(CancellationToken token = default(CancellationToken));

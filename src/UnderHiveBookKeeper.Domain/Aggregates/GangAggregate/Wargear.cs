@@ -5,7 +5,7 @@ using UnderHiveBookKeeper.Gangs.Domain.SeedWork;
 
 namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
 {
-    class Wargear : Entity
+    public class Wargear : Entity
     {
         public string Name { get; set; }
         

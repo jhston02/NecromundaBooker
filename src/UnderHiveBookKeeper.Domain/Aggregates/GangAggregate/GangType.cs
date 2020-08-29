@@ -5,7 +5,7 @@ using UnderHiveBookKeeper.Gangs.Domain.SeedWork;
 
 namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
 {
-    enum GangType
+    public enum GangType
     {
         Palanite_Enforcers,
         Corpse_Grinder_Cults,

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace UnderHiveBookKeeper.Gangs.Domain.SeedWork
 {
-    interface IAggregateRoot
+    public interface IAggregateRoot
     {
     }
 }

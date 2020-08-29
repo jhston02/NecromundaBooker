@@ -5,7 +5,7 @@ using System.Text;
 
 namespace UnderHiveBookKeeper.Gangs.Domain.SeedWork
 {
-    abstract class Entity
+    public abstract class Entity
     {
         int? _requestedHashCode;
         int _Id;

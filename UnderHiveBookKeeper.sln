@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnderHiveBookKeeper.Gangs.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnderHiveBookKeeper.Service", "src\UnderHiveBookKeeper.Service\UnderHiveBookKeeper.Service.csproj", "{4C365580-0A97-4BC2-A18C-CDF6F4970F3F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnderHiveBookerKeeper.Gangs.Domain.Tests", "test\UnderHiveBookerKeeper.Gangs.Domain.Tests\UnderHiveBookerKeeper.Gangs.Domain.Tests.csproj", "{5D0CFB39-1C0F-440D-9879-20A29E282913}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{4C365580-0A97-4BC2-A18C-CDF6F4970F3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C365580-0A97-4BC2-A18C-CDF6F4970F3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C365580-0A97-4BC2-A18C-CDF6F4970F3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D0CFB39-1C0F-440D-9879-20A29E282913}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D0CFB39-1C0F-440D-9879-20A29E282913}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D0CFB39-1C0F-440D-9879-20A29E282913}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D0CFB39-1C0F-440D-9879-20A29E282913}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,11 +5,15 @@ using UnderHiveBookKeeper.Gangs.Domain.SeedWork;
 
 namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
 {
-    class Trait : Entity
+    public class Trait : ValueObject
     {
         public string Name { get; set; }
 
         public string Description { get; set; }
 
+        protected override IEnumerable<object> GetAtomicValues()
+        {
+            yield return Name;
+        }
     }
 }

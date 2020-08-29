@@ -5,7 +5,7 @@ using UnderHiveBookKeeper.Gangs.Domain.SeedWork;
 
 namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
 {
-    class WeaponProfile : ValueObject
+    public class WeaponProfile : ValueObject
     {
         public string WeaponProfileName { get; private set; }
 
@@ -31,7 +31,7 @@ namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
         }
     }
 
-    enum ShootingProfile
+    public enum ShootingProfile
     {
         Normal,
         Template,

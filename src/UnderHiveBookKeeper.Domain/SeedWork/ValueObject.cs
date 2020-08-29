@@ -5,7 +5,7 @@ using System.Text;
 
 namespace UnderHiveBookKeeper.Gangs.Domain.SeedWork
 {
-    abstract class ValueObject
+    public abstract class ValueObject
     {
         protected static bool EqualOperator(ValueObject left, ValueObject right)
         {

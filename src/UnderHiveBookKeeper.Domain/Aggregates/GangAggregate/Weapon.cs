@@ -5,7 +5,7 @@ using UnderHiveBookKeeper.Gangs.Domain.SeedWork;
 
 namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
 {
-    class Weapon : Entity
+    public class Weapon : Entity
     {
         public string Name { get; private set; }
 
@@ -16,7 +16,7 @@ namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
 
     }
 
-    enum WeaponType
+    public enum WeaponType
     {
         Basic,
         CC,
