@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnderHiveBookKeeper", "UnderHiveBookKeeper\UnderHiveBookKeeper.csproj", "{85DF6D03-6843-4C49-BB79-F1055494413D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnderHiveBookKeeper.Gangs.Domain", "UnderHiveBookKeeper.Domain\UnderHiveBookKeeper.Gangs.Domain.csproj", "{8028B796-7A3E-449F-A400-356110355433}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnderHiveBookKeeper.Gangs.Domain", "UnderHiveBookKeeper.Domain\UnderHiveBookKeeper.Gangs.Domain.csproj", "{8028B796-7A3E-449F-A400-356110355433}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnderHiveBookKeeper.Client", "UnderHiveBookKeeper.Client\UnderHiveBookKeeper.Client.csproj", "{03EA0A2E-E7DC-4189-828B-3395E40933B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnderHiveBookKeeper.Service", "UnderHiveBookKeeper.Service\UnderHiveBookKeeper.Service.csproj", "{24A577E4-8133-4A7B-9F12-04C5D25213EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{85DF6D03-6843-4C49-BB79-F1055494413D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{85DF6D03-6843-4C49-BB79-F1055494413D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{85DF6D03-6843-4C49-BB79-F1055494413D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{85DF6D03-6843-4C49-BB79-F1055494413D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8028B796-7A3E-449F-A400-356110355433}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8028B796-7A3E-449F-A400-356110355433}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8028B796-7A3E-449F-A400-356110355433}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8028B796-7A3E-449F-A400-356110355433}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03EA0A2E-E7DC-4189-828B-3395E40933B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03EA0A2E-E7DC-4189-828B-3395E40933B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03EA0A2E-E7DC-4189-828B-3395E40933B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03EA0A2E-E7DC-4189-828B-3395E40933B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24A577E4-8133-4A7B-9F12-04C5D25213EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24A577E4-8133-4A7B-9F12-04C5D25213EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24A577E4-8133-4A7B-9F12-04C5D25213EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24A577E4-8133-4A7B-9F12-04C5D25213EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
