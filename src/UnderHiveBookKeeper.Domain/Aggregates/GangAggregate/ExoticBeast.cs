@@ -30,7 +30,7 @@ namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
 
         public ushort Intelligence { get; private set; }
 
-        private readonly List<GangMember> _weapons;
-        public IReadOnlyCollection<GangMember> Weapons => _weapons;
+        private readonly List<Weapon> _weapons;
+        public IReadOnlyCollection<Weapon> Weapons => _weapons;
     }
 }

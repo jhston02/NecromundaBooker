@@ -23,46 +23,23 @@ namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
         private readonly List<HangerOn> _hangerOns;
         public IReadOnlyCollection<HangerOn> HangerOns => _hangerOns;
 
-        public Gang(GangType gangType, uint gangRating)
+        public Gang(GangType gangType, ushort repuation, List<GangMember> members)
         {
+            if (!ValidateMembers(members, true, out List<string> notifications))
+                throw new ArgumentException(string.Join("\r\n", notifications));
+
             this.GangType = gangType;
-            this.GangRating = gangRating;
-            _members = new List<GangMember>();
+            this.Reputation = repuation;
+            _members = members;
             _hangerOns = new List<HangerOn>();
         }
 
         public void AddGangMember(GangMember member)
         {
-            var isSpecialist = member.GangMemberType == GangMemberType.Champion ||
-                    member.GangMemberType == GangMemberType.Leader ||
-                    member.GangMemberType == GangMemberType.Juve;
+            List<GangMember> potentialNewGang = (new List<GangMember>() { member }.Concat(_members)).ToList();
 
-            if (isSpecialist)
-            {
-                var specialMemberCount = Members.Where(x =>
-                {
-                    if (x.GangMemberType == GangMemberType.Champion &&
-                    x.GangMemberType == GangMemberType.Leader &&
-                    x.GangMemberType == GangMemberType.Juve)
-                        return true;
-                    return false;
-                }).Count();
-
-                var crewCount = Members.Where(x => x.GangMemberType == GangMemberType.Ganger).Count();
-
-                if (specialMemberCount > crewCount)
-                    throw new ArgumentException("Cannot add more specialists. Must add another ganger");
-            }
-
-            if (member.GangMemberType == GangMemberType.Leader && (Members.Where(x => x.GangMemberType == GangMemberType.Leader).Count() > 0))
-            {
-                throw new ArgumentException("Cannot not have more than one leader");
-            }
-
-            if (member.GangMemberType == GangMemberType.Champion && (Members.Where(x => x.GangMemberType == GangMemberType.Champion).Count() > 1))
-            {
-                throw new ArgumentException("Cannot not have more than two champions");
-            }
+            if (!ValidateMembers(potentialNewGang, false, out List<string> notifications))
+                throw new ArgumentException(string.Join("\r\n", notifications));
 
             _members.Add(member);
         }
@@ -99,6 +76,40 @@ namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
                 Reputation = 0;
             else
                 Reputation = (ushort)(Reputation - reputation);
+        }
+
+        private bool ValidateMembers(List<GangMember> members, bool initial, out List<string> notifications)
+        {
+            notifications = new List<string>();
+
+            if (!(members.Where(x => x.GangMemberType == GangMemberType.Leader).Count() == 1))
+                notifications.Add("Cannot have more than one leader");
+
+            if (initial)
+            {
+                if (members.Where(x => x.GangMemberType == GangMemberType.Champion).Count() > 2)
+                    notifications.Add("Cannot have more than 2 champions in initial list");
+            }
+
+            var specialMemberCount = members.Where(x =>
+            {
+                if (x.GangMemberType == GangMemberType.Champion ||
+                x.GangMemberType == GangMemberType.Leader ||
+                x.GangMemberType == GangMemberType.Juve)
+                    return true;
+                return false;
+            }).Count();
+
+            var crewCount = members.Where(x => x.GangMemberType == GangMemberType.Ganger).Count();
+
+            if (specialMemberCount > crewCount)
+                throw new ArgumentException("Cannot have more specialists than gangers");
+
+
+            if (notifications.Count() > 0)
+                return false;
+            else
+                return true;
         }
     }
 }
