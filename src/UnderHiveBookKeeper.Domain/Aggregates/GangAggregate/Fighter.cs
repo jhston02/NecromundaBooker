@@ -7,26 +7,23 @@ namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
 {
     public abstract class Fighter : Entity
     {
-        public Fighter(string name, ushort move, ushort weaponSkill, ushort balisticSkill, 
-            ushort strength, ushort toughness, ushort wounds, ushort initiative,
-            ushort attacks, ushort leadership, ushort willPower, ushort intelligence, ushort coolness,
-            bool isSpecialist, List<Trait> traits)
+        public Fighter(FighterInitializationData data)
         {
-            this.Name = name;
-            this.Move = move;
-            this.Weapon_Skill = weaponSkill;
-            this.Balistic_Skill = balisticSkill;
-            this.Strength = strength;
-            this.Toughness = toughness;
-            this.Initiative = initiative;
-            this.IsSpecialist = isSpecialist;
-            this.Attacks = attacks;
-            this.Wounds = wounds;
-            this.Leadership = leadership;
-            this.Willpower = willPower;
-            this.Intelligence = intelligence;
-            this._trait = traits;
-            this.Coolness = coolness;
+            this.Name = data.Name;
+            this.Move = data.Move;
+            this.Weapon_Skill = data.Weapon_Skill;
+            this.Balistic_Skill = data.Balistic_Skill;
+            this.Strength = data.Strength;
+            this.Toughness = data.Toughness;
+            this.Initiative = data.Initiative;
+            this.IsSpecialist = data.IsSpecialist;
+            this.Attacks = data.Attacks;
+            this.Wounds = data.Wounds;
+            this.Leadership = data.Leadership;
+            this.Willpower = data.Willpower;
+            this.Intelligence = data.Intelligence;
+            this._trait = data.Traits;
+            this.Coolness = data.Coolness;
         }
 
         public string Name { get; private set; }
@@ -68,5 +65,38 @@ namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
 
         private readonly List<Trait> _trait;
         public IReadOnlyCollection<Trait> Trait => _trait;
+    }
+
+    public class FighterInitializationData
+    {
+        public string Name { get; set; }
+
+        public ushort Move { get; set; }
+
+        public ushort Weapon_Skill { get; set; }
+
+        public ushort Balistic_Skill { get; set; }
+
+        public ushort Strength { get; set; }
+
+        public ushort Toughness { get; set; }
+
+        public ushort Wounds { get; set; }
+
+        public ushort Initiative { get; set; }
+
+        public ushort Attacks { get; set; }
+
+        public ushort Leadership { get; set; }
+
+        public ushort Coolness { get; set; }
+
+        public ushort Willpower { get; set; }
+
+        public ushort Intelligence { get; set; }
+
+        public bool IsSpecialist { get; set; }
+
+        public List<Trait> Traits { get; set; }
     }
 }

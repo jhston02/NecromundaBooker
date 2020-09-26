@@ -17,21 +17,24 @@ namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
 
         public uint Wealth { get; private set; }
 
+        public Stash Stash { get; private set; }
+
         private readonly List<GangMember> _members;
         public IReadOnlyCollection<GangMember> Members => _members;
 
         private readonly List<HangerOn> _hangerOns;
         public IReadOnlyCollection<HangerOn> HangerOns => _hangerOns;
 
-        public Gang(GangType gangType, ushort repuation, List<GangMember> members)
+        public Gang(GangType gangType, ushort reputation, List<GangMember> members, uint credits)
         {
             if (!ValidateMembers(members, true, out List<string> notifications))
                 throw new ArgumentException(string.Join("\r\n", notifications));
 
             this.GangType = gangType;
-            this.Reputation = repuation;
+            this.Reputation = reputation;
             _members = members;
             _hangerOns = new List<HangerOn>();
+            this.Stash = new Stash();
         }
 
         public void AddGangMember(GangMember member)
@@ -47,6 +50,11 @@ namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
         public void RemoveGangMember(GangMember member)
         {
             _members.Remove(member);
+            if (!ValidateMembers(_members, false, out List<string> notifications))
+            {
+                _members.Add(member);
+                throw new ArgumentException("Cannot remove gange member. Removing would result in invalid Gang");
+            }
         }
 
         public void RemoveHangerOn(HangerOn ho)
@@ -72,10 +80,22 @@ namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
 
         public void RemoveReputation(ushort reputation)
         {
+            var oldReputation = Reputation;
             if (reputation > Reputation)
                 Reputation = 0;
             else
                 Reputation = (ushort)(Reputation - reputation);
+
+            if (HangerOns.Count() > GetValidHangerOnCount(Reputation))
+            {
+                Reputation = oldReputation;
+                throw new ArgumentException("Too many Hanger Ons/Brutes for reputation");
+            }
+        }
+
+        private ushort GetValidHangerOnCount(ushort reputation)
+        {
+            return (ushort)((reputation % 5) + 1);
         }
 
         private bool ValidateMembers(List<GangMember> members, bool initial, out List<string> notifications)
@@ -104,7 +124,7 @@ namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
 
             if (specialMemberCount > crewCount)
                 throw new ArgumentException("Cannot have more specialists than gangers");
-
+ 
 
             if (notifications.Count() > 0)
                 return false;
