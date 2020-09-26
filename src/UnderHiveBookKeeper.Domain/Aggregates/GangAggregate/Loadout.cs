@@ -5,16 +5,12 @@ using UnderHiveBookKeeper.Gangs.Domain.SeedWork;
 
 namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates.GangAggregate
 {
-    public class Stash : Entity
+    public class Loadout : Entity
     {
-        public Stash(uint credits)
+        public Loadout(List<Weapon> weapons)
         {
-            this.Credits = credits;
-            _weapons = new List<Weapon>();
-            _wargear = new List<Wargear>();
-        }
 
-        public uint Credits { get; private set; }
+        }
 
         private readonly List<Weapon> _weapons;
         public IReadOnlyCollection<Weapon> Weapons => _weapons;

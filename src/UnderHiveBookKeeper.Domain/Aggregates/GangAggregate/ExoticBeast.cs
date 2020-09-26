@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
+namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates.GangAggregate
 {
     public class ExoticBeast : Wargear
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnderHiveBookKeeper.Gangs.Domain.SeedWork;
 
-namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
+namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates.GangAggregate
 {
     public abstract class Fighter : Entity
     {

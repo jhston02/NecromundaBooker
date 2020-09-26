@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using UnderHiveBookKeeper.Gangs.Domain.Aggregates;
+using System.Linq;
+using UnderHiveBookKeeper.Gangs.Domain.Aggregates.GangAggregate;
 using Xunit;
 
 namespace UnderHiveBookerKeeper.Gangs.Domain.Tests
@@ -50,7 +51,7 @@ namespace UnderHiveBookerKeeper.Gangs.Domain.Tests
                 new GangMember(GangMemberType.Champion, GetFighterData("test6", 1,1,1,1,1,1,1,1,1,1,1,1, false, null ))};
             }
 
-            private static FighterInitializationData GetFighterData(string name, ushort move, ushort weaponSkill, ushort balisticSkill,
+            public static FighterInitializationData GetFighterData(string name, ushort move, ushort weaponSkill, ushort balisticSkill,
             ushort strength, ushort toughness, ushort wounds, ushort initiative,
             ushort attacks, ushort leadership, ushort willPower, ushort intelligence, ushort coolness,
             bool isSpecialist, List<Trait> traits)
@@ -86,7 +87,7 @@ namespace UnderHiveBookerKeeper.Gangs.Domain.Tests
                 b,
                 c,
                 d
-            });
+            }, 0);
         }
 
         [Theory]
@@ -102,7 +103,7 @@ namespace UnderHiveBookerKeeper.Gangs.Domain.Tests
                     c,
                     d,
                     e
-                });
+                }, 0);
             });
         }
 
@@ -115,7 +116,7 @@ namespace UnderHiveBookerKeeper.Gangs.Domain.Tests
                 a,
                 b,
                 c
-            });
+            }, 0);
 
             gang.AddGangMember(d);
         }
@@ -130,28 +131,86 @@ namespace UnderHiveBookerKeeper.Gangs.Domain.Tests
                     b,
                     c,
                     d
-                });
+                }, 0);
             Assert.Throws<ArgumentException>(() =>
             {
                 gang.AddGangMember(e);
             });
         }
 
-        /*[Theory]
-        [MemberData(nameof(TestDataGenerator.GetInvalidDataNotEnoughGangers), MemberType = typeof(TestDataGenerator))]
-        public void AddGangMember_1Leader3Champ_4Gangers_ThrowsArgumentException(GangMember a, GangMember b, GangMember c, GangMember d, GangMember e, GangMember f, GangMember g, GangMember h)
+        [Theory]
+        [MemberData(nameof(TestDataGenerator.GetValidData), MemberType = typeof(TestDataGenerator))]
+        public void AddGangMember_RemoveGanger_Fails(GangMember a, GangMember b, GangMember c, GangMember d)
         {
             var gang = new Gang(GangType.Cawdor, 6, new List<GangMember>()
-                {
-                    a,
-                    b,
-                    c,
-                    d
-                });
+            {
+                a,
+                b
+            }, 0);
+
             Assert.Throws<ArgumentException>(() =>
             {
-                gang.AddGangMember(e);
+               gang.RemoveGangMember(b);
             });
-        }*/
+        }
+
+        [Fact]
+        public void AddBrute_HaveReputationForIt_Succeds()
+        {
+            var gangMembers = new List<GangMember>()
+            {
+                new GangMember(GangMemberType.Leader, TestDataGenerator.GetFighterData("test", 1,1,1,1,1,1,1,1,1,1,1,1, false, null)),
+                new GangMember(GangMemberType.Ganger, TestDataGenerator.GetFighterData("test1", 1,1,1,1,1,1,1,1,1,1,1,1, false, null ))
+            };
+
+            var brute = new HangerOn(GangSpecific.None, HangerOnType.HangerOn, TestDataGenerator.GetFighterData("test", 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, false, null));
+            var gang = new Gang(GangType.Cawdor, 2, gangMembers, 0);
+            gang.AddHangerOn(brute);
+
+            Assert.Single(gang.HangerOns);
+        }
+
+        [Fact]
+        public void AddBrute_DoNotHaveReputationForIt_Fails()
+        {
+            var gangMembers = new List<GangMember>()
+            {
+                new GangMember(GangMemberType.Leader, TestDataGenerator.GetFighterData("test", 1,1,1,1,1,1,1,1,1,1,1,1, false, null)),
+                new GangMember(GangMemberType.Ganger, TestDataGenerator.GetFighterData("test1", 1,1,1,1,1,1,1,1,1,1,1,1, false, null ))
+            };
+
+            var brute = new HangerOn(GangSpecific.None, HangerOnType.HangerOn, TestDataGenerator.GetFighterData("test", 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, false, null));
+            var brute1 = new HangerOn(GangSpecific.None, HangerOnType.HangerOn, TestDataGenerator.GetFighterData("test1", 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, false, null));
+            var gang = new Gang(GangType.Cawdor, 2, gangMembers, 0);
+            gang.AddHangerOn(brute);
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                gang.AddHangerOn(brute1);
+            });
+        }
+
+        [Fact]
+        public void LoseReputation_TooManyHangerOns_Fails()
+        {
+            var gangMembers = new List<GangMember>()
+            {
+                new GangMember(GangMemberType.Leader, TestDataGenerator.GetFighterData("test", 1,1,1,1,1,1,1,1,1,1,1,1, false, null)),
+                new GangMember(GangMemberType.Ganger, TestDataGenerator.GetFighterData("test1", 1,1,1,1,1,1,1,1,1,1,1,1, false, null ))
+            };
+
+            var brute = new HangerOn(GangSpecific.None, HangerOnType.HangerOn, TestDataGenerator.GetFighterData("test", 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, false, null));
+            var brute1 = new HangerOn(GangSpecific.None, HangerOnType.HangerOn, TestDataGenerator.GetFighterData("test1", 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, false, null));
+            var gang = new Gang(GangType.Cawdor, 5, gangMembers, 0);
+            gang.AddHangerOn(brute);
+            gang.AddHangerOn(brute1);
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                gang.RemoveReputation(2);
+            });
+        }
+
+        //TODO: Test wealth and rating
     }
 }

@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnderHiveBookKeeper.Gangs.Domain.Aggregates.GangAggregate;
 using UnderHiveBookKeeper.Gangs.Domain.SeedWork;
 
-namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
+namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates.GangAggregate
 {
     public class Gang : Entity, IAggregateRoot
     {
@@ -15,7 +14,13 @@ namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
 
         public ushort Reputation { get; private set; }
 
-        public uint Wealth { get; private set; }
+        public uint Wealth 
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         public Stash Stash { get; private set; }
 
@@ -34,7 +39,7 @@ namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
             this.Reputation = reputation;
             _members = members;
             _hangerOns = new List<HangerOn>();
-            this.Stash = new Stash();
+            this.Stash = new Stash(credits);
         }
 
         public void AddGangMember(GangMember member)
@@ -64,12 +69,12 @@ namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
 
         public void AddHangerOn(HangerOn ho)
         {
-            if ((Reputation % 5) + 1 < _hangerOns.Count())
+            if (GetValidHangerOnCount(Reputation) > _hangerOns.Count())
                 _hangerOns.Add(ho);
             else
-                throw new ArgumentException("Cannot add Hanger On at maximimum allowed with Rep");
+                throw new ArgumentException("Cannot add Hanger On at maximimum allowed with reputation");
 
-            if (ho.GangSpecific != GangSpecific.None && ho.GangSpecific.ToString() != GangType.ToString())
+            if (ho.GangSpecific != GangSpecific.None && ho.GangSpecific.ToString().ToLower() != GangType.ToString().ToLower())
                 throw new ArgumentException("Cannot give gang specific hanger on to different gang");
         }
 
@@ -95,7 +100,7 @@ namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates
 
         private ushort GetValidHangerOnCount(ushort reputation)
         {
-            return (ushort)((reputation % 5) + 1);
+            return (ushort)((Reputation / 5) + 1);
         }
 
         private bool ValidateMembers(List<GangMember> members, bool initial, out List<string> notifications)

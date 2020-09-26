@@ -5,12 +5,13 @@ using UnderHiveBookKeeper.Gangs.Domain.SeedWork;
 
 namespace UnderHiveBookKeeper.Gangs.Domain.Aggregates.GangAggregate
 {
-    public class Skill : Entity
+    public abstract class Expense : Entity
     {
-        public string Name { get; private set; }
+        public Expense(uint cost)
+        {
+            Cost = cost;
+        }
 
-        public string Description { get; private set; }
-
-        public string Category { get; set; }
+        public uint Cost { get; private set; }
     }
 }
